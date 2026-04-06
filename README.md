@@ -68,12 +68,12 @@ cd ..
 
 **下载预训练模型**：
 
-| 模型 | 存放路径 | 来源 |
-|------|---------|------|
-| ContentVec-768 | `ckpt/contentvec/checkpoint_best_legacy_500.pt` | <!-- TODO: 下载链接 --> TBD |
-| RMVPE | `ckpt/rmvpe/RMVPE.pt` | <!-- TODO: 下载链接 --> TBD |
-| NSF-HiFiGAN (Kouon 44.1kHz) | `ckpt/nsf-hifigan/` | <!-- TODO: 下载链接 --> TBD |
-| VR harmonic-noise separation | `ckpt/vr/model.pt` | <!-- TODO: 下载链接 --> TBD |
+| 模型                           | 存放路径                                            | 来源                      |
+| ---------------------------- | ----------------------------------------------- | ----------------------- |
+| ContentVec-768               | `ckpt/contentvec/checkpoint_best_legacy_500.pt` | <!-- TODO: 下载链接 --> TBD |
+| RMVPE                        | `ckpt/rmvpe/RMVPE.pt`                           | <!-- TODO: 下载链接 --> TBD |
+| NSF-HiFiGAN (Kouon 44.1kHz)  | `ckpt/nsf-hifigan/`                             | <!-- TODO: 下载链接 --> TBD |
+| VR harmonic-noise separation | `ckpt/vr/model.pt`                              | <!-- TODO: 下载链接 --> TBD |
 
 ### 数据准备
 
@@ -91,6 +91,7 @@ dataset/
 ```
 
 要求：
+
 - 干声 wav 文件（建议先做人声分离）
 - 建议每个切片 5-15 秒
 - 每个说话人建议 30 分钟以上数据
@@ -176,13 +177,13 @@ python webui.py \
 
 ### 双模式说明
 
-| | 音质优先 | 速度优先 |
-|---|---------|---------|
-| 采样率 | 44.1kHz | 24kHz |
-| Hop size | 512 | 300 |
-| Mel 帧率 | ~86Hz | 80Hz |
-| 采样步数 | 20 | 4 |
-| 配置文件 | `configs/config_quality.yaml` | `configs/config_fast.yaml` |
+|          | 音质优先                          | 速度优先                       |
+| -------- | ----------------------------- | -------------------------- |
+| 采样率      | 44.1kHz                       | 24kHz                      |
+| Hop size | 512                           | 300                        |
+| Mel 帧率   | ~86Hz                         | 80Hz                       |
+| 采样步数     | 20                            | 4                          |
+| 配置文件     | `configs/config_quality.yaml` | `configs/config_fast.yaml` |
 
 - 两者是独立训练的模型，共享代码但不共享权重
 - 需要分别进行预处理和训练
@@ -194,13 +195,13 @@ python webui.py \
 
 ## 与相关项目的区别
 
-| 特性 | LATHER-SVC | RVC | So-VITS-SVC | RIFT-SVC |
-|------|-----------|-----|------------|---------|
-| 生成范式 | Rectified Flow | GAN (HiFi-GAN) | VITS (VAE+Flow+GAN) | Rectified Flow |
-| 表现力控制 | 显式 (B/V/T predictor) | 无 | 无 | 无 |
-| Backbone | LYNXNet2 | - | WaveNet | DiT |
-| Content Encoder | ContentVec + Layer Attention | HuBERT | SoftVC / ContentVec | Whisper / CFG |
-| Shallow Diffusion | ✓ (t=0.4) | ✗ | ✗ | ✗ |
+| 特性                | LATHER-SVC                   | RVC            | So-VITS-SVC         | RIFT-SVC       |
+| ----------------- | ---------------------------- | -------------- | ------------------- | -------------- |
+| 生成范式              | Rectified Flow               | GAN (HiFi-GAN) | VITS (VAE+Flow+GAN) | Rectified Flow |
+| 表现力控制             | 显式 (B/V/T predictor)         | 无              | 无                   | 无              |
+| Backbone          | LYNXNet2                     | -              | WaveNet             | DiT            |
+| Content Encoder   | ContentVec + Layer Attention | HuBERT         | SoftVC / ContentVec | Whisper / CFG  |
+| Shallow Diffusion | ✓ (t=0.4)                    | ✗              | ✗                   | ✗              |
 
 ## 致谢
 

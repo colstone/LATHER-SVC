@@ -13,127 +13,27 @@ merged_phoneme_groups: []
 lang_phoneme_separator: [/]
 
 datasets:
-  - raw_data_dir: /home/waas/DSRX-main/data/117
-    speaker: 117
-    spk_id: 0
-    language: zh
-    artifact_level: 0 # 0 is high-quality data, 1 is spliced/artifact-heavy data.
-    test_prefixes:
-    - 64_budebuai_seg003
+  # === 在这里添加你的数据集 ===
+  # 每个说话人一个条目，示例：
+  #
+  # - raw_data_dir: /path/to/speaker_A
+  #   speaker: speaker_A
+  #   spk_id: 0
+  #   language: zh
+  #   artifact_level: 0  # 0 = 高质量干声, 1 = 有瑕疵/拼接数据
+  #   test_prefixes:
+  #     - some_file_prefix_for_validation
+  #
+  # - raw_data_dir: /path/to/speaker_B
+  #   speaker: speaker_B
+  #   spk_id: 1
+  #   language: en
+  #   artifact_level: 0
+  #   test_prefixes:
+  #     - another_prefix
+  []
 
-  - raw_data_dir: /home/waas/DSRX-main/data/csd-english
-    speaker: csd
-    spk_id: 1
-    language: en
-    artifact_level: 0 # 0 is high-quality data, 1 is spliced/artifact-heavy data.
-    test_prefixes:
-    - 新建文件夹_en001a_seg011
-
-  - raw_data_dir: "/home/waas/DSRX-main/data/hiro Ja"
-    speaker: hiro
-    spk_id: 2
-    language: ja
-    artifact_level: 0 # 0 is high-quality data, 1 is spliced/artifact-heavy data.
-    test_prefixes:
-    - "二息歩行 (Reloaded) (1)_000"
-
-  - raw_data_dir: "/home/waas/DSRX-main/data/ichika"
-    speaker: ichika
-    spk_id: 3
-    language: ja
-    artifact_level: 0 # 0 is high-quality data, 1 is spliced/artifact-heavy data.
-    test_prefixes:
-    - "Fragile Lake_主轨 1_seg001"
-
-  - raw_data_dir: "/home/waas/DSRX-main/data/kiritan"
-    speaker: kiritan
-    spk_id: 4
-    language: ja
-    artifact_level: 0 # 0 is high-quality data, 1 is spliced/artifact-heavy data.
-    test_prefixes:
-    - "Fragile Lake_主轨 1_seg001"
-
-  - raw_data_dir: "/home/waas/DSRX-main/data/kumi_english_ver1"
-    speaker: kumi
-    spk_id: 5
-    language: en
-    artifact_level: 0 # 0 is high-quality data, 1 is spliced/artifact-heavy data.
-    test_prefixes:
-    - "新建文件夹_911_seg005"
-
-  - raw_data_dir: "/home/waas/DSRX-main/data/liliko"
-    speaker: liliko
-    spk_id: 6
-    language: zh
-    artifact_level: 0 # 0 is high-quality data, 1 is spliced/artifact-heavy data.
-    test_prefixes:
-    - "hanser_900_0"
-
-  - raw_data_dir: "/home/waas/DSRX-main/data/xinhua_fix_lora"
-    speaker: xinhua
-    spk_id: 7
-    language: zh
-    artifact_level: 1 # 0 is high-quality data, 1 is spliced/artifact-heavy data.
-    test_prefixes:
-    - "xinhua_fix_lora_Notitle_1_seg003"
-
-  - raw_data_dir: "/home/waas/DSRX-main/data/zhenbaihuayin"
-    speaker: kanon
-    spk_id: 8
-    language: ja
-    artifact_level: 1 # 0 is high-quality data, 1 is spliced/artifact-heavy data.
-    test_prefixes:
-    - "真白花音_月 - vocal_seg000"
-
-  - raw_data_dir: "/home/waas/DSRX-main/data/moqi_diffsinger"
-    speaker: moqi
-    spk_id: 9
-    language: zh
-    artifact_level: 1 # 0 is high-quality data, 1 is spliced/artifact-heavy data.
-    test_prefixes:
-    - "moqi_岁月成碑_岁月成碑 moqi voice_seg006"
-
-  - raw_data_dir: "/home/waas/DSRX-main/data/qiguanmo"
-    speaker: qiguanmo
-    spk_id: 10
-    language: zh
-    artifact_level: 0 # 0 is high-quality data, 1 is spliced/artifact-heavy data.
-    test_prefixes:
-    - "世末歌者_世末歌者干音_Audio 2.cm-St_seg009"
-
-  - raw_data_dir: "/home/waas/DSRX-main/data/rintaku_masaru"
-    speaker: rintaku
-    spk_id: 11
-    language: ja
-    artifact_level: 1 # 0 is high-quality data, 1 is spliced/artifact-heavy data.
-    test_prefixes:
-    - "15分钟第一段_1_seg004"
-
-  - raw_data_dir: "/home/waas/DSRX-main/data/sansha"
-    speaker: sansha
-    spk_id: 12
-    language: zh
-    artifact_level: 0 # 0 is high-quality data, 1 is spliced/artifact-heavy data.
-    test_prefixes:
-    - "aixiao_缩混_seg017"
-
-  - raw_data_dir: "/home/waas/DSRX-main/data/weina"
-    speaker: weina
-    spk_id: 13
-    language: ja
-    artifact_level: 0 # 0 is high-quality data, 1 is spliced/artifact-heavy data.
-    test_prefixes:
-    - "dy-gy-v_seg002"
-
-  - raw_data_dir: "/home/waas/DSRX-main/data/yoko/diffsinger_db"
-    speaker: yoko
-    spk_id: 14
-    language: ja
-    artifact_level: 0 # 0 is high-quality data, 1 is spliced/artifact-heavy data.
-    test_prefixes:
-    - "nitech_jp_song070_f001_004_seg000"
-
-binary_data_dir: /home/waas/DSRX-main/data/svc/binary
+binary_data_dir: data/svc/binary
 binarization_args:
   shuffle: true
   num_workers: 16
@@ -196,7 +96,7 @@ lr_scheduler_args:
   step_size: 5000
   gamma: 0.8
 vocoder: NsfHifiGAN
-vocoder_ckpt: ckpt/nsf-hifigan/kouon_pc_mini_nsf-hifigan_1028_44100hz_512hop_128bin.ckpt
+vocoder_ckpt: ckpt/nsf-hifigan/model.ckpt
 vocoder_sample_rate: 44100
 vocoder_hop_size: 512
 pe: rmvpe
@@ -232,7 +132,7 @@ voicing_smooth_width: 0.12
 tension_smooth_width: 0.12
 
 use_spk_id: true
-num_spk: 15
+num_spk: 1
 num_lang: 0
 use_breathiness_embed: true
 use_voicing_embed: true

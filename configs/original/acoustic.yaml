@@ -11,7 +11,7 @@ lang_phoneme_separator: [/]
 datasets: []
 
 vocoder: NsfHifiGAN
-vocoder_ckpt: ckpt/kouon_pc_mini_nsf-hifigan_1028/kouon_pc_mini_nsf-hifigan_1028_44100hz_512hop_128bin.ckpt
+vocoder_ckpt: ckpt/nsf-hifigan/model.ckpt
 audio_sample_rate: 44100
 audio_num_mel_bins: 128
 hop_size: 512            # Hop size.
@@ -38,7 +38,7 @@ augmentation_args:
     range: [0.5, 2.]
     scale: 0.75
 
-binary_data_dir: 'data/xxx/binary'
+binary_data_dir: 'data/acoustic/binary'
 binarizer_cls: preprocessing.acoustic_binarizer.AcousticBinarizer
 spec_min: [-12]
 spec_max: [0]
@@ -53,7 +53,7 @@ tension_smooth_width: 0.12
 use_lang_id: true
 num_lang: 2
 use_spk_id: true
-num_spk: 14
+num_spk: 1
 use_energy_embed: false
 use_breathiness_embed: false
 use_voicing_embed: false
@@ -66,7 +66,7 @@ time_scale_factor: 1000
 timesteps: 1000
 max_beta: 0.02
 enc_ffn_kernel_size: 3
-enc_attention_type: normal  # normal or flash, using flash to enable flash attention on FastSpeech2 encoder.
+enc_attention_type: normal
 use_rope: true
 rel_pos: true
 sampling_algorithm: euler
@@ -132,25 +132,8 @@ permanent_ckpt_interval: 10000
 finetune_enabled: false
 finetune_ckpt_path: null
 
-finetune_ignored_params:
-  - model.fs2.encoder.embed_tokens
-  - model.fs2.txt_embed
-  - model.fs2.spk_embed
+finetune_ignored_params: []
 finetune_strict_shapes: true
 
 freezing_enabled: false
 frozen_params: []
-
-# LoRA fine-tuning (optional)
-lora:
-  enabled: true
-  rank: 8
-  alpha: 16
-  target_modules: ['^fs2\.', '^diffusion\.']
-  base_ckpt: ckpt\20250901_acoustic\model_ckpt_steps_160000.ckpt   # path to base full checkpoint or leave empty to use work_dir
-  train_bias: true
-  merge_before_export: true
-
-
-#ds_workers: 0
-

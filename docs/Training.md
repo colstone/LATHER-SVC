@@ -4,13 +4,13 @@
 
 ### 音频要求
 
-| 项目 | 要求 |
-|------|------|
-| 格式 | WAV（单声道） |
-| 采样率 | 任意（预处理时自动重采样） |
-| 内容 | 干声（建议提前做人声分离，去除伴奏和混响） |
-| 切片长度 | 建议 5-15 秒 |
-| 数据量 | 每个说话人建议 30 分钟以上（更多更好） |
+| 项目   | 要求                    |
+| ---- | --------------------- |
+| 格式   | WAV（单声道）              |
+| 采样率  | 任意（预处理时自动重采样）         |
+| 内容   | 干声（建议提前做人声分离，去除伴奏和混响） |
+| 切片长度 | 建议 5-15 秒             |
+| 数据量  | 每个说话人建议 30 分钟以上（更多更好） |
 
 ### 数据目录结构
 
@@ -128,14 +128,14 @@ python scripts/train.py --config configs/config_quality.yaml --exp_name my_exper
 
 ### 关键训练参数
 
-| 参数 | 默认值 | 说明 |
-|------|--------|------|
-| `max_updates` | 160000 | 总训练步数 |
-| `max_batch_frames` | 48000 | 每 batch 最大帧数（控制显存） |
-| `max_batch_size` | 48 | 每 batch 最大样本数 |
-| `val_check_interval` | 2000 | 验证间隔步数 |
-| `pl_trainer_precision` | `16-mixed` | 混合精度训练 |
-| `pl_trainer_devices` | `auto` | 使用的 GPU |
+| 参数                     | 默认值        | 说明                 |
+| ---------------------- | ---------- | ------------------ |
+| `max_updates`          | 160000     | 总训练步数              |
+| `max_batch_frames`     | 48000      | 每 batch 最大帧数（控制显存） |
+| `max_batch_size`       | 48         | 每 batch 最大样本数      |
+| `val_check_interval`   | 2000       | 验证间隔步数             |
+| `pl_trainer_precision` | `16-mixed` | 混合精度训练             |
+| `pl_trainer_devices`   | `auto`     | 使用的 GPU            |
 
 显存不足时，降低 `max_batch_frames` 和 `max_batch_size`。
 
@@ -149,13 +149,14 @@ tensorboard --logdir checkpoints/my_experiment/lightning_logs
 
 **关键监控指标**：
 
-| 指标 | 含义 | 期望趋势 |
-|------|------|---------|
-| `mel_loss` | Rectified Flow velocity matching loss | 持续下降，最终收敛 |
-| `aux_mel_loss` | ConvNeXt aux decoder 的 mel L1 loss | 前期快速下降，后期缓慢收敛 |
-| `var_loss` | Variance predictor MSE loss | 持续下降 |
+| 指标             | 含义                                    | 期望趋势          |
+| -------------- | ------------------------------------- | ------------- |
+| `mel_loss`     | Rectified Flow velocity matching loss | 持续下降，最终收敛     |
+| `aux_mel_loss` | ConvNeXt aux decoder 的 mel L1 loss    | 前期快速下降，后期缓慢收敛 |
+| `var_loss`     | Variance predictor MSE loss           | 持续下降          |
 
 **Validation 输出**：
+
 - `gt_*`：Ground truth 音频（vocoder 合成）
 - `aux_*`：Aux decoder 粗略 mel 的合成音频
 - `diff_*`：Rectified Flow 精修后的合成音频
@@ -167,11 +168,11 @@ tensorboard --logdir checkpoints/my_experiment/lightning_logs
 
 以单张 RTX 3090 (24GB) 为例：
 
-| 数据量 | 建议步数 | 大约时长 |
-|--------|---------|---------|
-| 1 说话人，30 分钟 | 80,000-100,000 | 6-10 小时 |
+| 数据量           | 建议步数            | 大约时长     |
+| ------------- | --------------- | -------- |
+| 1 说话人，30 分钟   | 80,000-100,000  | 6-10 小时  |
 | 5 说话人，各 30 分钟 | 120,000-160,000 | 12-20 小时 |
-| 10+ 说话人 | 160,000+ | 20+ 小时 |
+| 10+ 说话人       | 160,000+        | 20+ 小时   |
 
 实际时长取决于 batch size、数据切片长度和 GPU 性能。
 
@@ -181,15 +182,15 @@ tensorboard --logdir checkpoints/my_experiment/lightning_logs
 
 音质优先和速度优先是两个独立的训练流程：
 
-| | 音质优先 | 速度优先 |
-|---|---------|---------|
-| 配置文件 | `configs/config_quality.yaml` | `configs/config_fast.yaml` |
-| 采样率 | 44.1kHz | 24kHz |
-| Hop size | 512 | 300 |
-| 采样步数 | 20 | 4 |
-| 预处理 | 需要单独预处理 | 需要单独预处理 |
-| 训练 | 独立训练 | 独立训练 |
-| binary_data_dir | 必须不同 | 必须不同 |
+|                 | 音质优先                          | 速度优先                       |
+| --------------- | ----------------------------- | -------------------------- |
+| 配置文件            | `configs/config_quality.yaml` | `configs/config_fast.yaml` |
+| 采样率             | 44.1kHz                       | 24kHz                      |
+| Hop size        | 512                           | 300                        |
+| 采样步数            | 20                            | 4                          |
+| 预处理             | 需要单独预处理                       | 需要单独预处理                    |
+| 训练              | 独立训练                          | 独立训练                       |
+| binary_data_dir | 必须不同                          | 必须不同                       |
 
 两个模式共享代码和配置继承链，但生成的二进制数据和训练权重完全独立。
 
@@ -209,10 +210,10 @@ python scripts/train.py --config configs/config_fast.yaml --exp_name fast_exp
 
 ### 保留策略
 
-| 参数 | 默认值 | 说明 |
-|------|--------|------|
-| `num_ckpt_keep` | 5 | 保留最近 N 个 checkpoint，旧的自动删除 |
-| `permanent_ckpt_start` | 60000 | 从第 60000 步开始标记为永久保留 |
+| 参数                        | 默认值   | 说明                         |
+| ------------------------- | ----- | -------------------------- |
+| `num_ckpt_keep`           | 5     | 保留最近 N 个 checkpoint，旧的自动删除 |
+| `permanent_ckpt_start`    | 60000 | 从第 60000 步开始标记为永久保留        |
 | `permanent_ckpt_interval` | 10000 | 每 10000 步保存一个永久 checkpoint |
 
 永久 checkpoint 不受 `num_ckpt_keep` 限制，不会被自动删除。适合用于后续选取最佳模型。
@@ -220,6 +221,7 @@ python scripts/train.py --config configs/config_fast.yaml --exp_name fast_exp
 ### Checkpoint 内容
 
 每个 checkpoint 包含：
+
 - 模型权重（`model` 前缀）
 - 优化器状态
 - 学习率调度器状态
