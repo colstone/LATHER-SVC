@@ -1,6 +1,8 @@
 # LATHER-SVC
 
-<!-- TODO: logo 图片 -->
+<p align="center">
+  <img src="docs/lather-logo.png" alt="LATHER-SVC Logo" width="400">
+</p>
 
 **Lightweight Audio Timbre Harmonization and Expression Rendering — SVC**
 
@@ -23,7 +25,9 @@ LATHER-SVC 是 Kouon Project 旗下项目。
 
 ## 架构概览
 
-<!-- TODO: 模型架构图 -->
+<p align="center">
+  <img src="docs/lather-diagram.png" alt="LATHER-SVC Architecture">
+</p>
 
 前向流程：
 
