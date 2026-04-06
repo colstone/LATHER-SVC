@@ -1,0 +1,38 @@
+# Checkpoints
+ckpt/
+*.ckpt
+*.pt
+*.pth
+
+# Binary datasets
+data/*/binary/
+
+# Training outputs
+lightning_logs/
+tensorboard_logs/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temp
+*.tmp
+*.bak
