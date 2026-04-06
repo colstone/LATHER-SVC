@@ -72,12 +72,12 @@ cd ..
 
 **下载预训练模型**：
 
-| 模型                           | 存放路径                                            | 来源                      |
-| ---------------------------- | ----------------------------------------------- | ----------------------- |
-| ContentVec-768               | `ckpt/contentvec/checkpoint_best_legacy_500.pt` | <!-- TODO: 下载链接 --> TBD |
-| RMVPE                        | `ckpt/rmvpe/RMVPE.pt`                           | <!-- TODO: 下载链接 --> TBD |
-| NSF-HiFiGAN (Kouon 44.1kHz)  | `ckpt/nsf-hifigan/`                             | <!-- TODO: 下载链接 --> TBD |
-| VR harmonic-noise separation | `ckpt/vr/model.pt`                              | <!-- TODO: 下载链接 --> TBD |
+| 模型                               | 存放路径                                            | 下载链接                                                                                                                                    |
+| -------------------------------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| ContentVec-768                   | `ckpt/contentvec/checkpoint_best_legacy_500.pt` | [HuggingFace](https://huggingface.co/lengyue233/content-vec-best/resolve/main/checkpoint_best_legacy_500.pt)                            |
+| RMVPE                            | `ckpt/rmvpe/RMVPE.pt`                           | [HuggingFace](https://huggingface.co/lj1995/VoiceConversionWebUI/resolve/main/rmvpe.pt)                                                 |
+| NSF-HiFiGAN (Kouon Ver. 44.1kHz) | `ckpt/nsf-hifigan/`                             | [GitHub Release](https://github.com/Kouon-Project/Kouon_Vocoder/releases/download/V2.0.0/kouon_pc_mini_nsf-hifigan_1028_generators.zip) |
+| （可选）VR harmonic-noise separation | `ckpt/vr/model.pt`                              | <!-- TODO: 下载链接 --> TBD                                                                                                                 |
 
 ### 数据准备
 
