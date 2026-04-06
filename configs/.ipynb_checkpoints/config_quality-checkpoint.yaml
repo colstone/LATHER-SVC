@@ -1,0 +1,11 @@
+base_config:
+  - ./svc_base.yaml
+
+audio_sample_rate: 44100
+hop_size: 512
+sampling_steps: 20
+K_step: 400
+max_batch_frames: 16000
+max_batch_size: 24
+
+binary_data_dir: data/svc_quality/binary

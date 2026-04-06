@@ -1,0 +1,257 @@
+base_config:
+  - ./original/base.yaml
+
+task_cls: training.svc_task.SVCTask
+binarizer_cls: preprocessing.svc_binarizer.SVCBinarizer
+dataset_size_key: lengths
+use_phoneme_dictionary: false
+
+dictionaries: {}
+all_phonemes: []
+extra_phonemes: []
+merged_phoneme_groups: []
+lang_phoneme_separator: [/]
+
+datasets:
+  - raw_data_dir: /home/waas/DSRX-main/data/117
+    speaker: 117
+    spk_id: 0
+    language: zh
+    artifact_level: 0 # 0 is high-quality data, 1 is spliced/artifact-heavy data.
+    test_prefixes:
+    - 64_budebuai_seg003
+
+  - raw_data_dir: /home/waas/DSRX-main/data/csd-english
+    speaker: csd
+    spk_id: 1
+    language: en
+    artifact_level: 0 # 0 is high-quality data, 1 is spliced/artifact-heavy data.
+    test_prefixes:
+    - 新建文件夹_en001a_seg011
+
+  - raw_data_dir: "/home/waas/DSRX-main/data/hiro Ja"
+    speaker: hiro
+    spk_id: 2
+    language: ja
+    artifact_level: 0 # 0 is high-quality data, 1 is spliced/artifact-heavy data.
+    test_prefixes:
+    - "二息歩行 (Reloaded) (1)_000"
+
+  - raw_data_dir: "/home/waas/DSRX-main/data/ichika"
+    speaker: ichika
+    spk_id: 3
+    language: ja
+    artifact_level: 0 # 0 is high-quality data, 1 is spliced/artifact-heavy data.
+    test_prefixes:
+    - "Fragile Lake_主轨 1_seg001"
+
+  - raw_data_dir: "/home/waas/DSRX-main/data/kiritan"
+    speaker: kiritan
+    spk_id: 4
+    language: ja
+    artifact_level: 0 # 0 is high-quality data, 1 is spliced/artifact-heavy data.
+    test_prefixes:
+    - "Fragile Lake_主轨 1_seg001"
+
+  - raw_data_dir: "/home/waas/DSRX-main/data/kumi_english_ver1"
+    speaker: kumi
+    spk_id: 5
+    language: en
+    artifact_level: 0 # 0 is high-quality data, 1 is spliced/artifact-heavy data.
+    test_prefixes:
+    - "新建文件夹_911_seg005"
+
+  - raw_data_dir: "/home/waas/DSRX-main/data/liliko"
+    speaker: liliko
+    spk_id: 6
+    language: zh
+    artifact_level: 0 # 0 is high-quality data, 1 is spliced/artifact-heavy data.
+    test_prefixes:
+    - "hanser_900_0"
+
+  - raw_data_dir: "/home/waas/DSRX-main/data/xinhua_fix_lora"
+    speaker: xinhua
+    spk_id: 7
+    language: zh
+    artifact_level: 1 # 0 is high-quality data, 1 is spliced/artifact-heavy data.
+    test_prefixes:
+    - "xinhua_fix_lora_Notitle_1_seg003"
+
+  - raw_data_dir: "/home/waas/DSRX-main/data/zhenbaihuayin"
+    speaker: kanon
+    spk_id: 8
+    language: ja
+    artifact_level: 1 # 0 is high-quality data, 1 is spliced/artifact-heavy data.
+    test_prefixes:
+    - "真白花音_月 - vocal_seg000"
+
+  - raw_data_dir: "/home/waas/DSRX-main/data/moqi_diffsinger"
+    speaker: moqi
+    spk_id: 9
+    language: zh
+    artifact_level: 1 # 0 is high-quality data, 1 is spliced/artifact-heavy data.
+    test_prefixes:
+    - "moqi_岁月成碑_岁月成碑 moqi voice_seg006"
+
+  - raw_data_dir: "/home/waas/DSRX-main/data/qiguanmo"
+    speaker: qiguanmo
+    spk_id: 10
+    language: zh
+    artifact_level: 0 # 0 is high-quality data, 1 is spliced/artifact-heavy data.
+    test_prefixes:
+    - "世末歌者_世末歌者干音_Audio 2.cm-St_seg009"
+
+  - raw_data_dir: "/home/waas/DSRX-main/data/rintaku_masaru"
+    speaker: rintaku
+    spk_id: 11
+    language: ja
+    artifact_level: 1 # 0 is high-quality data, 1 is spliced/artifact-heavy data.
+    test_prefixes:
+    - "15分钟第一段_1_seg004"
+
+  - raw_data_dir: "/home/waas/DSRX-main/data/sansha"
+    speaker: sansha
+    spk_id: 12
+    language: zh
+    artifact_level: 0 # 0 is high-quality data, 1 is spliced/artifact-heavy data.
+    test_prefixes:
+    - "aixiao_缩混_seg017"
+
+  - raw_data_dir: "/home/waas/DSRX-main/data/weina"
+    speaker: weina
+    spk_id: 13
+    language: ja
+    artifact_level: 0 # 0 is high-quality data, 1 is spliced/artifact-heavy data.
+    test_prefixes:
+    - "dy-gy-v_seg002"
+
+  - raw_data_dir: "/home/waas/DSRX-main/data/yoko/diffsinger_db"
+    speaker: yoko
+    spk_id: 14
+    language: ja
+    artifact_level: 0 # 0 is high-quality data, 1 is spliced/artifact-heavy data.
+    test_prefixes:
+    - "nitech_jp_song070_f001_004_seg000"
+
+binary_data_dir: /home/waas/DSRX-main/data/svc/binary
+binarization_args:
+  shuffle: true
+  num_workers: 16
+
+audio_num_mel_bins: 128
+fft_size: 2048
+win_size: 2048
+fmin: 40
+fmax: 16000
+mel_base: 'e'
+spec_min: [-12]
+spec_max: [0]
+mel_vmin: -14.
+mel_vmax: 4.
+hidden_size: 256
+dropout: 0.1
+enc_layers: 4
+num_heads: 2
+enc_ffn_kernel_size: 3
+ffn_act: gelu
+use_pos_embed: true
+use_rope: true
+rel_pos: false
+enc_attention_type: normal
+diffusion_type: reflow
+time_scale_factor: 1000
+T_start: 0.4
+T_start_infer: 0.4
+sampling_algorithm: euler
+backbone_type: lynxnet2
+backbone_args:
+  num_channels: 1024
+  num_layers: 6
+  kernel_size: 31
+  dropout_rate: 0.0
+use_shallow_diffusion: true
+shallow_diffusion_args:
+  train_aux_decoder: true
+  train_diffusion: true
+  val_gt_start: false
+  aux_decoder_arch: convnext
+  aux_decoder_args:
+    num_channels: 512
+    num_layers: 6
+    kernel_size: 7
+    dropout_rate: 0.1
+  aux_decoder_grad: 0.1
+lambda_aux_mel_loss: 0.2
+main_loss_type: l2
+main_loss_log_norm: false
+optimizer_args:
+  optimizer_cls: modules.optimizer.muon.Muon_AdamW
+  lr: 0.0006
+  muon_args:
+    weight_decay: 0.1
+  adamw_args:
+    weight_decay: 0.0
+lr_scheduler_args:
+  scheduler_cls: torch.optim.lr_scheduler.StepLR
+  step_size: 5000
+  gamma: 0.8
+vocoder: NsfHifiGAN
+vocoder_ckpt: ckpt/nsf-hifigan/kouon_pc_mini_nsf-hifigan_1028_44100hz_512hop_128bin.ckpt
+vocoder_sample_rate: 44100
+vocoder_hop_size: 512
+pe: rmvpe
+pe_ckpt: ckpt/rmvpe/RMVPE.pt
+hnsep: world
+hnsep_ckpt: ckpt/vr/model.pt
+f0_min: 40
+f0_max: 2000
+
+contentvec:
+  checkpoint_path: ckpt/contentvec/checkpoint_best_legacy_500.pt
+  layer_mode: attention
+  target_layer: 12
+  layer_range: [7, 12]
+  freeze: true
+  input_dim: 768
+
+variance_predictor:
+  backbone_layers: 5
+  backbone_channels: 256
+  kernel_size: 5
+  dropout: 0.1
+lambda_var_loss: 0.5
+
+breathiness_db_min: -96.0
+breathiness_db_max: -20.0
+voicing_db_min: -96.0
+voicing_db_max: -12.0
+tension_logit_min: -10.0
+tension_logit_max: 10.0
+breathiness_smooth_width: 0.12
+voicing_smooth_width: 0.12
+tension_smooth_width: 0.12
+
+use_spk_id: true
+num_spk: 15
+num_lang: 0
+use_breathiness_embed: true
+use_voicing_embed: true
+use_tension_embed: true
+use_energy_embed: false
+use_key_shift_embed: false
+use_speed_embed: false
+
+max_batch_frames: 48000
+max_batch_size: 48
+val_with_vocoder: true
+val_check_interval: 2000
+num_valid_plots: 10
+max_updates: 160000
+num_ckpt_keep: 5
+permanent_ckpt_start: 60000
+permanent_ckpt_interval: 10000
+pl_trainer_devices: auto
+pl_trainer_precision: 16-mixed
+
+finetune_enabled: false
+freezing_enabled: false

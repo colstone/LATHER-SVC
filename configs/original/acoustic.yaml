@@ -1,0 +1,156 @@
+base_config:
+  - configs/original/base.yaml
+
+task_cls: training.acoustic_task.AcousticTask
+
+dictionaries:
+all_phonemes: [AP, SP]
+extra_phonemes: []
+merged_phoneme_groups:
+lang_phoneme_separator: [/]
+datasets: []
+
+vocoder: NsfHifiGAN
+vocoder_ckpt: ckpt/kouon_pc_mini_nsf-hifigan_1028/kouon_pc_mini_nsf-hifigan_1028_44100hz_512hop_128bin.ckpt
+audio_sample_rate: 44100
+audio_num_mel_bins: 128
+hop_size: 512            # Hop size.
+fft_size: 2048           # FFT size.
+win_size: 2048           # FFT size.
+fmin: 40
+fmax: 16000
+
+binarization_args:
+  shuffle: true
+  num_workers: 40
+  allow_missing_phonemes: true
+augmentation_args:
+  random_pitch_shifting:
+    enabled: true
+    range: [-12., 12.]
+    scale: 5.0
+  fixed_pitch_shifting:
+    enabled: false
+    targets: [-5., 5.]
+    scale: 0.5
+  random_time_stretching:
+    enabled: true
+    range: [0.5, 2.]
+    scale: 0.75
+
+binary_data_dir: 'data/xxx/binary'
+binarizer_cls: preprocessing.acoustic_binarizer.AcousticBinarizer
+spec_min: [-12]
+spec_max: [0]
+mel_vmin: -14.
+mel_vmax: 4.
+mel_base: 'e'
+energy_smooth_width: 0.12
+breathiness_smooth_width: 0.12
+voicing_smooth_width: 0.12
+tension_smooth_width: 0.12
+
+use_lang_id: true
+num_lang: 2
+use_spk_id: true
+num_spk: 14
+use_energy_embed: false
+use_breathiness_embed: false
+use_voicing_embed: false
+use_tension_embed: false
+use_key_shift_embed: true
+use_speed_embed: true
+
+diffusion_type: reflow
+time_scale_factor: 1000
+timesteps: 1000
+max_beta: 0.02
+enc_ffn_kernel_size: 3
+enc_attention_type: normal  # normal or flash, using flash to enable flash attention on FastSpeech2 encoder.
+use_rope: true
+rel_pos: true
+sampling_algorithm: euler
+sampling_steps: 20
+diff_accelerator: ddim
+diff_speedup: 10
+hidden_size: 256
+backbone_type: 'lynxnet2'
+backbone_args:
+  num_channels: 1024
+  num_layers: 6
+  kernel_size: 31
+  dropout_rate: 0.0
+
+main_loss_type: l2
+main_loss_log_norm: false
+schedule_type: 'linear'
+
+# shallow diffusion
+use_shallow_diffusion: true
+T_start: 0.4
+T_start_infer: 0.4
+K_step: 400
+K_step_infer: 400
+
+shallow_diffusion_args:
+  train_aux_decoder: true
+  train_diffusion: true
+  val_gt_start: false
+  aux_decoder_arch: convnext
+  aux_decoder_args:
+    num_channels: 512
+    num_layers: 6
+    kernel_size: 7
+    dropout_rate: 0.1
+  aux_decoder_grad: 0.1
+
+lambda_aux_mel_loss: 0.2
+
+# train and eval
+num_sanity_val_steps: 1
+optimizer_args:
+  optimizer_cls: modules.optimizer.muon.Muon_AdamW
+  lr: 0.0006
+  muon_args:
+    weight_decay: 0.1
+  adamw_args:
+    weight_decay: 0.0
+lr_scheduler_args:
+  step_size: 5000
+  gamma: 0.8
+max_batch_frames: 16000
+max_batch_size: 24
+dataset_size_key: 'lengths'
+val_with_vocoder: true
+val_check_interval: 2000
+num_valid_plots: 10
+max_updates: 100000
+num_ckpt_keep: 5
+permanent_ckpt_start: 60000
+permanent_ckpt_interval: 10000
+
+finetune_enabled: false
+finetune_ckpt_path: null
+
+finetune_ignored_params:
+  - model.fs2.encoder.embed_tokens
+  - model.fs2.txt_embed
+  - model.fs2.spk_embed
+finetune_strict_shapes: true
+
+freezing_enabled: false
+frozen_params: []
+
+# LoRA fine-tuning (optional)
+lora:
+  enabled: true
+  rank: 8
+  alpha: 16
+  target_modules: ['^fs2\.', '^diffusion\.']
+  base_ckpt: ckpt\20250901_acoustic\model_ckpt_steps_160000.ckpt   # path to base full checkpoint or leave empty to use work_dir
+  train_bias: true
+  merge_before_export: true
+
+
+#ds_workers: 0
+
