@@ -8,16 +8,14 @@
 
 ## 简介
 
-LATHER-SVC 是一个基于 Rectified Flow 的多说话人歌声转换（Singing Voice Conversion）系统。项目基于 DSRX（DiffSinger fork）代码库改造，删除了所有 SVS（歌声合成）相关模块，保留并改进了 diffusion/vocoder/training 基础设施。
+LATHER-SVC 是一个基于 Rectified Flow 的多说话人歌声转换（Singing Voice Conversion）系统。项目基于 DSRX 代码库改造，删除了大部分 SVS（歌声合成）相关模块，保留并改进了 diffusion/vocoder/training 基础设施。
 
 核心特色在于：**在 SVC 中首个引入显式唱法参数预测**。通过 Variance Predictor 预测 breathiness（气声）、tension（张力）、voicing（发声）三个参数，让每个说话人学到自己独特的唱法习惯，从而提升转换后的表现力和自然度。
-
-LATHER-SVC 是 Kouon Project 旗下项目。
 
 ## 特性
 
 - **显式唱法建模**：通过 Variance Predictor 预测 breathiness/tension/voicing，每个说话人具备独立的唱法风格
-- **双模式推理**：音质优先（44.1kHz, 20 步采样）和速度优先（24kHz, 4 步采样）
+- **双模式推理**：音质优先（44.1kHz, 20 步采样）和速度优先（24kHz, 4 步采样, 于下个版本更新）
 - **Rectified Flow + Shallow Diffusion**：从 ConvNeXt aux decoder 的粗略预测出发，Rectified Flow 仅从 t=0.4 开始精修，兼顾质量与速度
 - **ContentVec Layer Attention**：可选融合第 7-12 层特征，自适应提取最优内容表示
 - **多说话人支持**：Embedding lookup table，单模型支持多说话人训练与推理
@@ -50,7 +48,7 @@ LATHER-SVC 是 Kouon Project 旗下项目。
 ### 安装
 
 ```bash
-git clone <repo_url> LATHER-SVC
+git clone https://github.com/colstone/LATHER-SVC.git
 cd LATHER-SVC
 pip install -r requirements.txt
 ```
@@ -72,12 +70,15 @@ cd ..
 
 **下载预训练模型**：
 
-| 模型                               | 存放路径                                            | 下载链接                                                                                                                                    |
-| -------------------------------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| ContentVec-768                   | `ckpt/contentvec/checkpoint_best_legacy_500.pt` | [HuggingFace](https://huggingface.co/lengyue233/content-vec-best/resolve/main/checkpoint_best_legacy_500.pt)                            |
-| RMVPE                            | `ckpt/rmvpe/RMVPE.pt`                           | [HuggingFace](https://huggingface.co/lj1995/VoiceConversionWebUI/resolve/main/rmvpe.pt)                                                 |
-| NSF-HiFiGAN (Kouon Ver. 44.1kHz) | `ckpt/nsf-hifigan/`                             | [GitHub Release](https://github.com/Kouon-Project/Kouon_Vocoder/releases/download/V2.0.0/kouon_pc_mini_nsf-hifigan_1028_generators.zip) |
-| （可选）VR harmonic-noise separation | `ckpt/vr/model.pt`                              | <!-- TODO: 下载链接 --> TBD                                                                                                                 |
+| 模型                                          | 存放路径                                            | 下载链接                                                                                                                                    |
+| ------------------------------------------- | ----------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
+| ContentVec-768                              | `ckpt/contentvec/checkpoint_best_legacy_500.pt` | [HuggingFace](https://huggingface.co/lengyue233/content-vec-best/resolve/main/checkpoint_best_legacy_500.pt)                            |
+| RMVPE*                                      | `ckpt/rmvpe/RMVPE.pt`                           | [HuggingFace](https://huggingface.co/lj1995/VoiceConversionWebUI/resolve/main/rmvpe.pt)                                                 |
+| NSF-HiFiGAN (Kouon Ver. 44.1kHz)            | `ckpt/nsf-hifigan/`                             | [GitHub Release](https://github.com/Kouon-Project/Kouon_Vocoder/releases/download/V2.0.0/kouon_pc_mini_nsf-hifigan_1028_generators.zip) |
+| （可选）VR harmonic-noise separation            | `ckpt/vr/model.pt`                              | TBD                                                                                                                                     |
+| （可选）RefineGAN (Kouon Ver. 44.1kHz & hop512) | `ckpt/refinegan`                                | TBD                                                                                                                                     |
+
+**若要使用 RMVPE 且 F0 无超音域（>1000Hz）情况，这里更建议使用 OpenVPI 训练版本。*
 
 ### 数据准备
 
@@ -107,16 +108,16 @@ datasets:
   - raw_data_dir: /path/to/speaker_A
     speaker: speaker_A
     spk_id: 0
-    language: zh
-    artifact_level: 0
+    language: zh #此字段可不设置
+    artifact_level: 0 #此字段可不设置
     test_prefixes:
       - some_test_file_prefix
 
   - raw_data_dir: /path/to/speaker_B
     speaker: speaker_B
     spk_id: 1
-    language: en
-    artifact_level: 0
+    language: en #此字段可不设置
+    artifact_level: 0 #此字段可不设置
     test_prefixes:
       - another_test_prefix
 ```
@@ -140,7 +141,7 @@ python scripts/binarize.py --config configs/config_quality.yaml
 ### 训练
 
 ```bash
-python scripts/train.py --config configs/config_quality.yaml --exp_name my_experiment
+python scripts/train.py --config configs/config_quality.yaml --exp_name my_experiment --reset
 ```
 
 关键训练参数（在 `svc_base.yaml` 中配置）：
@@ -170,7 +171,7 @@ python scripts/infer.py \
   --pitch_shift 0
 ```
 
-**WebUI**：
+**WebUI（可用状态未测试）**：
 
 ```bash
 python webui.py \
@@ -209,11 +210,10 @@ python webui.py \
 
 ## 致谢
 
-- [DSRX / DiffSinger](https://github.com/openvpi/DiffSinger) — 基础代码库
+- [DSRX](https://github.com/Kouon-Project/DSRX) — 基础代码库
 - [ContentVec](https://github.com/auspicious3000/contentvec) — 内容特征提取
 - [RMVPE](https://github.com/Dream-Fang/RMVPE) — F0 提取
 - NSF-HiFiGAN — 声码器
-- Kouon Project 相关项目：SOAP, RINSE, Kouon NSF-HiFiGAN
 
 ## 许可证
 

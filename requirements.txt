@@ -4,7 +4,6 @@
 
 click
 einops>=0.7.0
-fairseq
 gradio>=3.39,<5
 h5py
 huggingface-hub<1.0
