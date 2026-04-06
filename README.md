@@ -10,7 +10,7 @@
 
 LATHER-SVC 是一个基于 Rectified Flow 的多说话人歌声转换（Singing Voice Conversion）系统。项目基于 DSRX 代码库改造，删除了大部分 SVS（歌声合成）相关模块，保留并改进了 diffusion/vocoder/training 基础设施。
 
-核心特色在于：**在 SVC 中首个引入显式唱法参数预测**。通过 Variance Predictor 预测 breathiness（气声）、tension（张力）、voicing（发声）三个参数，让每个说话人学到自己独特的唱法习惯，从而提升转换后的表现力和自然度。
+核心特色在于：**在 SVC 中引入显式唱法参数预测**。通过 Variance Predictor 预测 breathiness（气声）、tension（张力）、voicing（发声）三个参数，让每个说话人学到自己独特的唱法习惯，从而提升转换后的表现力和自然度。
 
 ## 特性
 
@@ -217,4 +217,4 @@ python webui.py \
 
 ## 许可证
 
-TBD
+Apache 2.0
