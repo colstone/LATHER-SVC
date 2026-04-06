@@ -1,8 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(git -C \"C:/Users/colst/Desktop/LATHER-SVC_beta\" status)",
-      "Bash(git -C \"C:/Users/colst/Desktop/LATHER-SVC_beta\" init)"
-    ]
-  }
-}
