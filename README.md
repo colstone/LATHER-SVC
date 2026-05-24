@@ -43,6 +43,19 @@ LATHER-SVC 是一个基于 Rectified Flow 的多说话人歌声转换（Singing 
 - 显存需求：训练 ≥ 12GB，推理 ≥ 6GB
 - 其他依赖见 `requirements.txt`
 
+## ⚠️ 重要说明
+
+**本项目不是一键包 SVC 工具。** LATHER-SVC 基于 DiffSinger / DSRX 的训练体系构建，面向有深度学习训练经验的用户。如果你需要开箱即用的 SVC 体验，建议使用 RVC 或 So-VITS-SVC。
+
+使用前请注意以下几点：
+
+- **训练周期**：完整训练需要约 **160k 步**（config_quality），在单张 RTX 3090/4090 级别显卡上预计需要 10+ 小时。30k 步以内的 checkpoint 通常还不具备可用音质，请勿以早期 checkpoint 评价模型效果。
+- **推荐使用 GPU 云实例训练**：如果本地硬件不足，推荐租用 GPU 云实例（如 AutoDL、Vast.ai 等）。预处理数据需存放在 SSD 上——ContentVec 多层特征缓存会使数据膨胀约 **10 倍**（2GB 原始音频 → ~20GB），h5py 随机读取在 HDD 上性能极差，会严重拖慢训练。
+- **Variance 机制**：breathiness / tension / voicing 的提取与预测直接继承自 [DiffSinger](https://github.com/openvpi/DiffSinger) 和 [DSRX](https://github.com/Kouon-Project/DSRX) 的 variance 架构。对该机制设计的讨论请参考上游项目。
+- **无预训练底模**：当前版本暂未提供预训练 SVC checkpoint，需从零训练。请确保有足够的数据量（每说话人 ≥ 30 分钟干声）和训练资源。
+- **请勿随意修改架构后以修改版结果评价本项目**。ContentVec Layer Attention、Variance Predictor、ConditionRefiner 等模块之间存在设计耦合，擅自裁剪或替换可能导致训练不收敛或效果严重劣化。如果你有兴趣进行消融实验（ablation study）来验证各模块的贡献，非常欢迎——请在 Issue 或 PR 中分享你的实验设置和结果，我们乐于讨论。
+
+
 ## 快速开始
 
 ### 安装
